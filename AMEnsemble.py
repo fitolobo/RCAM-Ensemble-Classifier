@@ -121,59 +121,6 @@ class HardRCNN_Ensemble(BaseEstimator, ClassifierMixin):
         y, self.Energy = self.RCNN(U, xin, alpha=alpha_value, max_it=self.max_it, tau=self.tau, verbose = self.verbose)
         
         return (self.le_).inverse_transform((y[self.Utr_.shape[0]:]>=0).astype(int))
-    
-class SoftRCNN_Ensemble(BaseEstimator, ClassifierMixin):
-    def __init__(self, classifiers = BaseClassifiers, CvRCNN = CvECNN, alpha=1, max_it=100,tau=1.e-4,verbose = False):
-        self.classifiers = classifiers
-        self.CvRCNN = CvRCNN
-        self.alpha = alpha
-        self.max_it = max_it
-        self.tau = tau
-        self.verbose = verbose
-        
-    def fit(self, X, y):
-        # Check that X and y have correct shape
-        X, y = check_X_y(X, y)
-        
-        self.le_ = LabelEncoder()
-        y = (self.le_).fit_transform(y)
-        if len((self.le_).classes_)>2:
-            print("Soft RCNN Ensemble Classifier can only be used for binary classification.")
-        
-        try:
-            C = 2*np.vstack([clf.predict_proba(X)[:,1] for clf in self.classifiers]).T-1
-        except:
-            if self.verbose==True:
-                print("The base classifiers have been trained!")
-            C = 2*np.vstack([(clf.fit(X,y)).predict_proba(X)[:,1] for clf in self.classifiers]).T-1
-            
-        S = np.sqrt(1-C**2)
-        self.Utr_ = C+1j*S
-        self.xtr_ = 2*y-1
-        
-        return self
-    
-    def predict(self, X):
-        # Check is fit had been called
-        check_is_fitted(self,attributes="Utr_")
-        
-        # Input validation
-        X = check_array(X)
-        
-        C = 2*np.vstack([clf.predict_proba(X)[:,1] for clf in self.classifiers]).T-1
-        S = np.sqrt(1-C**2)
-        Ute = C+1j*S                
-        U = np.vstack([self.Utr_,Ute])
-        
-        xin = np.hstack([self.xtr_,np.zeros((Ute.shape[0],))])+1j*np.zeros((U.shape[0],))
-        y, self.Energy = self.CvRCNN(U, xin, alpha=self.alpha, max_it=self.max_it, tau=self.tau, verbose = self.verbose)
-        
-        return (self.le_).inverse_transform((y[self.Utr_.shape[0]:].real>=0).astype(int))
-    
-    
-# 
-# 
-# 
 
 def BipolarECNN(U,xin,alpha=10,max_it=10,tau=1.e-4,verbose = True):
     Er = tau+1
