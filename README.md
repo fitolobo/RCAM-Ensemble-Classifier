@@ -34,7 +34,7 @@ CvECNN(U,xin,alpha,max_it,tau,verbose)
 CvICNN(U,xin,alpha,max_it,tau,verbose)
 ```
 where it_max (default is it_max = 10) is the maximum number of iterations and verbose (default is true) informs if the maximum number of iterations has been reached.
-Another possibility is to find a better <img src="https://render.githubusercontent.com/render/math?math=%5Calpha"> value using grid search
+Another possibility is to find a better <img src="https://render.githubusercontent.com/render/math?math=%5CLarge%5Calpha"> value using grid search
 
 ```Python
 parameters = {'classifiers':[rf.estimators_], 'RCNN':[CvECNN],
