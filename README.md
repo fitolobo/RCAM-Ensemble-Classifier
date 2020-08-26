@@ -20,6 +20,10 @@ of the ensemble. For example:
 rf = RandomForestClassifier(n_estimators = 30).fit(Xtr,ytr)
 y_pred = rf.predict(Xte)
 ```
+The default base classifiers are given by 
+```Python
+BaseClassifiers = [lin_clf, svm_clf, knn_clf, gnb_clf]
+```
 
 then, we can fit and predict, initializing with the estimators and the associative memory model. In this case, it is possible to use a complex valued exponential model (CvINN) or the identity complex valued model (CvECNN):
 
