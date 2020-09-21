@@ -1,9 +1,9 @@
 # RCAM-Ensemble-Classifier
 
-In this  work, we propose to combine classifiers using an associative memory model. Precisely, we introduce ensemble methods based on recurrent correlation associative memories (RCAMs) for binary classification problems. We show that an RCAM-based ensemble classifier can be viewed as a majority vote classifier whose weights depend on the similarity between the base classifiers and the resulting ensemble method.
+In this work, we propose to combine classifiers using an associative memory model. Precisely, we introduce ensemble methods based on recurrent correlation associative memories (RCAMs) for binary classification problems. We show that an RCAM-based ensemble classifier can be viewed as a majority vote classifier whose weights depend on the similarity between the base classifiers and the resulting ensemble method.
 
 # Getting Started
-This repository contain the Python source-codes of the RCAM-Ensemble-Classifier for binary classification problems, as described in the paper "Ensemble of Binary Classifiers Combined Using RCAMs" by Rodolfo Lobo and Marcos Eduardo Valle. The Jupyter-notebook of the computational experimens are also available in this repository.
+This repository contains the Python source-codes of the RCAM-Ensemble-Classifier for binary classification problems, as described in the paper "Ensemble of Binary Classifiers Combined Using RCAMs" by Rodolfo Lobo and Marcos Eduardo Valle. The Jupyter-notebook of the computational experiments is also available in this repository.
 
 # Usage
 
@@ -13,7 +13,7 @@ First of all, call the AMensemble module using:
 from AMEnsemble import CvECNN, CvICNN, HardRCNN_Ensemble
 ```
 
-Analogously to the usage of sklearn models we can fit and predict. Firstly, we choose the base estimators
+Analogously to the usage of sklearn models, we can fit and predict. Firstly, we choose the base estimators
 of the ensemble. For example:
 
 ```Python
@@ -24,8 +24,7 @@ The default base classifiers are given by
 ```Python
 BaseClassifiers = [lin_clf, svm_clf, knn_clf, gnb_clf]
 ```
-
-then, we can fit and predict, initializing with the estimators and the associative memory model. In this case, it is possible to use a complex valued exponential model (CvINN) or the identity complex valued model (CvECNN):
+Then, we can fit and predict, initializing with the estimators and the associative memory model. In this case, it is possible to use a complex-valued exponential model (CvINN) or the identity complex-valued model (CvECNN):
 
 ```Python
 ICAM = HardRCNN_Ensemble(classifiers=rf.estimators_, RCNN = CvICNN, alpha=None, max_it=100,tau=1.e-4,verbose = False).fit(Xtr,ytr)
